@@ -37,6 +37,18 @@ class MyNotebook(wx.Notebook):
         self.AddPage(self.fbrowser, u"数据库管理")
         self.AddPage(self.parmeter, u"参数配置")
 
+        # tab status
+        sizer = wx.GridSizer(rows=3, cols=3, hgap=5, vgap=5)
+        self.status.SetSizer(sizer)
+        startbtn = wx.Button(parent=self.status,label=u"停止", pos=(10, 10))
+        sizer.Add(startbtn, 3 ,3)
+        startbtn.Bind(wx.EVT_BUTTON, self.onStart)
+        self.status.Fit()
+
+    def onStart(self, event):
+        pass
+
+
 if __name__ == '__main__':
     app = wx.PySimpleApp()
     frame = MyFrame()
