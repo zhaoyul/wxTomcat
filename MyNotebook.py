@@ -6,6 +6,7 @@ import wx
 # Interface
 #####################################################
 APP_TITLE=u"HIS管理平台"
+MINI_SIZE=(480, 300)
 #####################################################
 # tomcat_directorys
 #####################################################
@@ -25,6 +26,7 @@ class MyNotebook(wx.Notebook):
         super(MyNotebook, self).__init__(parent)
 
         #Attributes
+        self.SetMinSize(MINI_SIZE)
         self.status = wx.Panel(self)
         self.port = wx.Panel(self)
         self.port.SetBackgroundColour(wx.BLUE)
@@ -38,11 +40,14 @@ class MyNotebook(wx.Notebook):
         self.AddPage(self.parmeter, u"参数配置")
 
         # tab status
-        sizer = wx.GridSizer(rows=3, cols=3, hgap=5, vgap=5)
+        sizer = wx.GridBagSizer(hgap=5, vgap=5)
         self.status.SetSizer(sizer)
-        startbtn = wx.Button(parent=self.status,label=u"停止", pos=(10, 10))
-        sizer.Add(startbtn, 3 ,3)
+        startbtn = wx.Button(parent=self.status,label=u"启动", pos=(10, 10))
+        sizer.Add(startbtn,pos=(0,3), span=(3,1), flag=wx.EXPAND)
         startbtn.Bind(wx.EVT_BUTTON, self.onStart)
+        stopbtn = wx.Button(parent=self.status,label=u"停止", pos=(10, 10))
+        sizer.Add(stopbtn,pos=(3,3), span=(3,1), flag=wx.EXPAND)
+        stopbtn.Bind(wx.EVT_BUTTON, self.onStart)
         self.status.Fit()
 
     def onStart(self, event):
