@@ -1,8 +1,10 @@
 #!/bin/evn python
 # -*- coding: UTF-8 -*-
 import wx
+import glob
 import Image
 from PropSpliter import ProportionalSplitter
+from splitPanel import SplitPanel
 
 #project import
 from appStuff import plotPanel, MySplitter
@@ -31,10 +33,10 @@ class MainTreeBook(wx.Treebook):
     def __init__(self, parent):
         wx.Treebook.__init__(self, parent, -1, style=wx.BK_DEFAULT)
         il = wx.ImageList(32, 32)
-        il.Add(wx.Bitmap("appsrv.bmp"))#web server icon
+        il.Add(wx.Bitmap("appsrv.bmp", wx.BITMAP_TYPE_BMP))#web server icon
         for x in  range(3):
-            il.Add(wx.Bitmap("tomcat.bmp"))
-        il.Add(wx.Bitmap("DB.bmp"))#web server icon
+            il.Add(wx.Bitmap("tomcat.bmp", wx.BITMAP_TYPE_BMP))
+        il.Add(wx.Bitmap("DB.bmp", wx.BITMAP_TYPE_BMP))#web server icon
 
         self.AssignImageList(il)
         imageIdGenerator = getNextImageID(il.GetImageCount())
@@ -77,7 +79,7 @@ class MainTreeBook(wx.Treebook):
 #主框架
 class HISFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, -1, APP_TITLE, size=(960,600))
+        wx.Frame.__init__(self, None, -1, APP_TITLE, size=(1024,768))
         MainTreeBook(self)
         self.CreateStatusBar()
         #status info
@@ -155,10 +157,10 @@ class AppNotebook(wx.Notebook):
 
         #Attributes
         self.SetMinSize(MINI_SIZE)
-        self.status = wx.Panel(self)
-        self.port = wx.Panel(self)
+        self.status = SplitPanel(self)
+        self.port = SplitPanel(self)
         self.port.SetBackgroundColour(wx.BLUE)
-        self.parmeter = wx.Panel(self)
+        self.parmeter = SplitPanel(self)
         self.fbrowser = wx.GenericDirCtrl(self)
         self.spliter = MySplitter(self, -1).createOne()
 
@@ -169,16 +171,6 @@ class AppNotebook(wx.Notebook):
         self.AddPage(self.parmeter, u"参数配置")
         self.AddPage(self.spliter,u'日志')
 
-        # tab status
-        sizer = wx.GridBagSizer(hgap=5, vgap=5)
-        self.status.SetSizer(sizer)
-        startbtn = wx.Button(parent=self.status,label=u"启动", pos=(10, 10))
-        sizer.Add(startbtn,pos=(0,3), span=(3,1), flag=wx.EXPAND)
-        startbtn.Bind(wx.EVT_BUTTON, self.onStart)
-        stopbtn = wx.Button(parent=self.status,label=u"停止", pos=(10, 10))
-        sizer.Add(stopbtn,pos=(3,3), span=(3,1), flag=wx.EXPAND)
-        stopbtn.Bind(wx.EVT_BUTTON, self.onStart)
-        self.status.Fit()
 
     def onStart(self, event):
         pass
