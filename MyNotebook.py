@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 import wx
 import glob
-import Image
+from PIL import Image
 from PropSpliter import ProportionalSplitter
 from splitPanel import SplitPanel
 
